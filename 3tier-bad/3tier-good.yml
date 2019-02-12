@@ -1,0 +1,14 @@
+---
+- name: Good 3 Tier playbook
+  hosts: all
+  gather_facts: false
+  become: true
+  roles:
+    - role: enable-repos
+      when: inventory_hostname in groups['all']
+    - role: install-tomcat
+      when: inventory_hostname in groups['apps']
+    - role: install-postgres
+      when: inventory_hostname in groups['appdbs']
+    - role: install-haproxy
+      when: inventory_hostname in groups['frontends']

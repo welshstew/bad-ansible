@@ -1,0 +1,11 @@
+---
+- name: install haproxy
+  hosts: frontends
+  gather_facts: true
+  become: true
+  tasks:
+    - block:
+      - include_role: 
+          name: enable-repos
+      - include_role: 
+          name: install-haproxy

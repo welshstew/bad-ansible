@@ -1,0 +1,55 @@
+---
+- name: install tomcat
+  yum:
+    name: tomcat
+    state: latest
+
+- name: enable tomcat at boot
+  service:
+    name: tomcat
+    enabled: yes
+
+# - name: create ansible tomcat directory
+#   file:
+#     path: /usr/share/tomcat/webapps/ROOT
+#     state: directory
+
+# - name: copy static index.html to tomcat webapps/ansible/index.html
+#   template:
+#     src: index.html.j2
+#     dest: /usr/share/tomcat/webapps/ROOT/index.html
+#     mode: 0644
+
+- name: copy static index.html to tomcat webapps/ROOT/index.html
+  template:
+    src: templates/index.html.j2
+    dest: /usr/share/tomcat/webapps/ROOT/index.html
+
+- name: start tomcat
+  service:
+    name: tomcat
+    state: restarted
+
+
+
+# - name: index.html on app 1
+#   hosts: app1
+#   gather_facts: false
+#   become: true
+
+#   tasks:
+#   - name: copy static index.html to tomcat webapps/ansible/index.html
+#     template:
+#       src: templates/index.html.app1
+#       dest: /usr/share/tomcat/webapps/ansible/index.html
+
+# - name: index.html on app 1
+#   hosts: app2
+#   gather_facts: false
+#   become: true
+
+#   tasks:
+#   - name: copy static index.html to tomcat webapps/ansible/index.html
+#     template:
+#       src: templates/index.html.app2
+#       dest: /usr/share/tomcat/webapps/ansible/index.html
